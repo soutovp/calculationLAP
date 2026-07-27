@@ -7,8 +7,10 @@
     <style>
         .calculationAntitoxinSection{
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 1em;
             margin: 1em 0;
         }
         .calculationAntitoxinSection form{
@@ -20,6 +22,7 @@
 </head>
 <body>
     <section class="calculationAntitoxinSection">
+        <h2>Level Upgrades ( Antitoxinas )</h2>
         <form>
             <div>
                 <label for="heroStartingLevel">Level Inicial do Herói</label>
@@ -34,12 +37,33 @@
             </div>
             <div id="calculationAntitoxinResult"></div>
         </form>
+        <hr>
+        <h2>Melhora de Estrelas</h2>
+        <form id="heroStarsCalculation">
+            <div>
+                <label for="heroStars"></label>
+                <input type="number" placeholder="estrelas" id="heroStars">
+                <p>A quantidade de estrelas do Herói pode ser encontradas acessando o herói e visualizando o número de estrelas abaixo do nível de poder.</p>
+            </div>
+            <div>
+                <label for="heroObjectiveStars">Meta de Estrelas ( max:10 )</label>
+                <input type="number" id="heroObjectiveStars" placeholder="Meta de Estrelas">
+            </div>
+            <div>
+                <input type="submit" value="Calcular">
+            </div>
+            <div id="heroStarsResult"></div>
+        </form>
     </section>
     <script src="./js/antitoxinCalculation.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded',()=>{
+            // Variáveis
             const calculationAntitoxinSection = document.getElementsByClassName('calculationAntitoxinSection')[0];
             const calculationAntitoxinForm = calculationAntitoxinSection.getElementsByTagName('form')[0];
+            // --
+            const heroStarsCalculationForm = document.getElementById('heroStarsCalculation');
+            // Eventos
             calculationAntitoxinForm.addEventListener('submit', (event)=>{
                 event.preventDefault();
                 const entrada = parseInt(document.getElementById('heroStartingLevel').value);
@@ -47,6 +71,11 @@
                 const result = calcularAntitoxinTotal(entrada, saida);
                 console.log(result);
                 document.getElementById('calculationAntitoxinResult').innerText = `${result.totalFormatado} de Antitoxinas`;
+            });
+            heroStarsCalculationForm.addEventListener('submit', (event)=>{
+                event.preventDefault();
+                const entrada = parseFloat(document.getElementById('heroStars').value);
+                const saida = parseFloat(document.getElementById('heroObjectiveStars').value);
             });
         });
     </script>
