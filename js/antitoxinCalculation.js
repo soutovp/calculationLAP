@@ -1,0 +1,220 @@
+/**
+ * Mapeamento dos custos de Antitoxin por nível individual (Nível 2 ao 148)
+ * Fonte: http://lastasylumplague.com/database/heroes-upgrade-requirements-antitoxins-stars-skill-badges/
+ */
+const ANTITOXIN_COSTS = {
+	2: 100,
+	3: 200,
+	4: 300,
+	5: 500,
+	6: 700,
+	7: 900,
+	8: 1100,
+	9: 1300,
+	10: 1500,
+	11: 2100,
+	12: 2700,
+	13: 3300,
+	14: 3900,
+	15: 4700,
+	16: 5500,
+	17: 6300,
+	18: 7100,
+	19: 7900,
+	20: 8700,
+	21: 9700,
+	22: 10700,
+	23: 11700,
+	24: 12700,
+	25: 13900,
+	26: 15100,
+	27: 16300,
+	28: 17500,
+	29: 18700,
+	30: 19900,
+	31: 21900,
+	32: 23900,
+	33: 25900,
+	34: 27900,
+	35: 29900,
+	36: 31900,
+	37: 33900,
+	38: 35900,
+	39: 37900,
+	40: 39900,
+	41: 41900,
+	42: 43900,
+	43: 45900,
+	44: 47900,
+	45: 137900,
+	46: 227900,
+	47: 317900,
+	48: 407900,
+	49: 497900,
+	50: 587900,
+	51: 677900,
+	52: 767900,
+	53: 857900,
+	54: 947900,
+	55: 1050000,
+	56: 1150000,
+	57: 1250000,
+	58: 1350000,
+	59: 1450000,
+	60: 1550000,
+	61: 1650000,
+	62: 1750000,
+	63: 1850000,
+	64: 1950000,
+	65: 2500000,
+	66: 3000000,
+	67: 3600000,
+	68: 4200000,
+	69: 4800000,
+	70: 5500000,
+	71: 6000000,
+	72: 6700000,
+	73: 7200000,
+	74: 7800000,
+	75: 8400000,
+	76: 9100000,
+	77: 9700000,
+	78: 10200000,
+	79: 10900000,
+	80: 11800000,
+	81: 12700000,
+	82: 13600000,
+	83: 14500000,
+	84: 15400000,
+	85: 16300000,
+	86: 17200000,
+	87: 18100000,
+	88: 19000000,
+	89: 19900000,
+	90: 20800000,
+	91: 21700000,
+	92: 22600000,
+	93: 23500000,
+	94: 24400000,
+	95: 26100000,
+	96: 27800000,
+	97: 29500000,
+	98: 31200000,
+	99: 32900000,
+	100: 34600000,
+	101: 36300000,
+	102: 38000000,
+	103: 39700000,
+	104: 41400000,
+	105: 43100000,
+	106: 44800000,
+	107: 46500000,
+	108: 48200000,
+	109: 49900000,
+	110: 51600000,
+	111: 53300000,
+	112: 55000000,
+	113: 56700000,
+	114: 58400000,
+	115: 60700000,
+	116: 63000000,
+	117: 65300000,
+	118: 67600000,
+	119: 69900000,
+	120: 72200000,
+	121: 74500000,
+	122: 76800000,
+	123: 79100000,
+	124: 81400000,
+	125: 83700000,
+	126: 86000000,
+	127: 88300000,
+	128: 90600000,
+	129: 92900000,
+	130: 96500000,
+	131: 100100000,
+	132: 104000000,
+	133: 108000000,
+	134: 112000000,
+	135: 116000000,
+	136: 120000000,
+	137: 124000000,
+	138: 128000000,
+	139: 132000000,
+	140: 136000000,
+	141: 140000000,
+	142: 144000000,
+	143: 148000000,
+	144: 152000000,
+	145: 156000000,
+	146: 160000000,
+	147: 164000000,
+	148: 168000000,
+};
+
+/**
+ * Função principal para calcular o total de Antitoxins necessários
+ *
+ * @param {number} nivelAtual - Nível inicial do Herói (ex: 1)
+ * @param {number} nivelDesejado - Nível final desejado (ex: 50)
+ * @returns {object} Resultado contendo o total numérico e formatado ou mensagem de erro
+ */
+function calcularAntitoxinTotal(nivelAtual, nivelDesejado) {
+	// 1. Validação de dados de entrada
+	if (!Number.isInteger(nivelAtual) || !Number.isInteger(nivelDesejado)) {
+		return { erro: 'Os níveis devem ser números inteiros válidos.' };
+	}
+
+	if (nivelAtual < 1 || nivelDesejado > 148) {
+		return { erro: 'O nível atual deve ser no mínimo 1 e o nível desejado no máximo 148.' };
+	}
+
+	if (nivelAtual >= nivelDesejado) {
+		return { erro: 'O nível desejado deve ser maior que o nível atual.' };
+	}
+
+	// 2. Cálculo da soma acumulada
+	let totalAntitoxins = 0;
+
+	// Para passar do 'nivelAtual' até o 'nivelDesejado',
+	// somamos o custo de cada upgrade (do nívelAtual + 1 até o nivelDesejado)
+	for (let level = nivelAtual + 1; level <= nivelDesejado; level++) {
+		if (ANTITOXIN_COSTS[level] !== undefined) {
+			totalAntitoxins += ANTITOXIN_COSTS[level];
+		}
+	}
+
+	// 3. Retorno formatado
+	return {
+		nivelAtual: nivelAtual,
+		nivelDesejado: nivelDesejado,
+		totalAntitoxins: totalAntitoxins,
+		totalFormatado: totalAntitoxins.toLocaleString('pt-BR'), // Ex: 5.829.700
+	};
+}
+
+// ==========================================
+// EXEMPLOS DE USO
+// ==========================================
+
+// Exemplo 1: Do Nível 1 ao Nível 20
+// console.log(calcularAntitoxinTotal(1, 20));
+/*
+{
+  nivelAtual: 1,
+  nivelDesejado: 20,
+  totalAntitoxins: 50200,
+  totalFormatado: '50.200'
+}
+*/
+
+// Exemplo 2: Do Nível 50 ao Nível 100
+// console.log(calcularAntitoxinTotal(50, 100));
+/*
+{
+  nivelAtual: 50,
+  nivelDesejado: 100,
+  totalAntitoxins: 578000000,
+  totalFormatado: '578.000.000'
+}
+*/

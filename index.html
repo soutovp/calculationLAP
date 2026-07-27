@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculos Last Asylum Plague</title>
+    <style>
+        .calculationAntitoxinSection{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1em 0;
+        }
+        .calculationAntitoxinSection form{
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+    </style>
+</head>
+<body>
+    <section class="calculationAntitoxinSection">
+        <form>
+            <div>
+                <label for="heroStartingLevel">Level Inicial do Herói</label>
+                <input type="number" name="heroStartingLevel" id="heroStartingLevel" placeholder="Nível inicial">
+            </div>
+            <div>
+                <label for="heroEndingLevel">Level Inicial do Herói</label>
+                <input type="number" name="heroEndingLevel" id="heroEndingLevel" placeholder="Nível Desejado">
+            </div>
+            <div>
+                <input type="submit" value="Enviar">
+            </div>
+            <div id="calculationAntitoxinResult"></div>
+        </form>
+    </section>
+    <script src="./js/antitoxinCalculation.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded',()=>{
+            const calculationAntitoxinSection = document.getElementsByClassName('calculationAntitoxinSection')[0];
+            const calculationAntitoxinForm = calculationAntitoxinSection.getElementsByTagName('form')[0];
+            calculationAntitoxinForm.addEventListener('submit', (event)=>{
+                event.preventDefault();
+                const entrada = parseInt(document.getElementById('heroStartingLevel').value);
+                const saida = parseInt(document.getElementById('heroEndingLevel').value);
+                const result = calcularAntitoxinTotal(entrada, saida);
+                console.log(result);
+                document.getElementById('calculationAntitoxinResult').innerText = `${result.totalFormatado} de Antitoxinas`;
+            });
+        });
+    </script>
+</body>
+</html>
