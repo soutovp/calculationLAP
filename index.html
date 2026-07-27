@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,7 @@
             display: flex;
             flex-direction: column;
             gap: 1em;
+            width: 400px;
         }
     </style>
 </head>
@@ -41,7 +42,7 @@
         <h2>Melhora de Estrelas</h2>
         <form id="heroStarsCalculation">
             <div>
-                <label for="heroStars"></label>
+                <label for="heroStars">Estrelas Atuais do Herói</label>
                 <input type="number" placeholder="estrelas" id="heroStars">
                 <p>A quantidade de estrelas do Herói pode ser encontradas acessando o herói e visualizando o número de estrelas abaixo do nível de poder.</p>
             </div>
@@ -55,6 +56,7 @@
             <div id="heroStarsResult"></div>
         </form>
     </section>
+    <script src="./js/casasDecimais.js"></script>
     <script src="./js/antitoxinCalculation.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded',()=>{
@@ -69,7 +71,7 @@
                 const entrada = parseInt(document.getElementById('heroStartingLevel').value);
                 const saida = parseInt(document.getElementById('heroEndingLevel').value);
                 const result = calcularAntitoxinTotal(entrada, saida);
-                console.log(result);
+                console.log(abreviarNumero(result.totalFormatado, 3));
                 document.getElementById('calculationAntitoxinResult').innerText = `${result.totalFormatado} de Antitoxinas`;
             });
             heroStarsCalculationForm.addEventListener('submit', (event)=>{
