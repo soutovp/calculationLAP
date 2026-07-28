@@ -4,22 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculos Last Asylum Plague</title>
-    <style>
-        .calculationAntitoxinSection{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1em;
-            margin: 1em 0;
-        }
-        .calculationAntitoxinSection form{
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
-            width: 400px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <section class="calculationAntitoxinSection">
@@ -42,13 +27,45 @@
         <h2>Melhora de Estrelas</h2>
         <form id="heroStarsCalculation">
             <div>
-                <label for="heroStars">Estrelas Atuais do Herói</label>
-                <input type="number" placeholder="estrelas" id="heroStars">
-                <p>A quantidade de estrelas do Herói pode ser encontradas acessando o herói e visualizando o número de estrelas abaixo do nível de poder.</p>
+                <div>
+                    <h3>Estrelas Atuais</h3>
+                    <div>
+                        <div class="heroStartingStars starCounter">
+                            <div class="starValue">
+                                <input type="text" id="heroStartingStars" min="0" max="10.0" value="0.0">
+                            </div>
+                            <div class="starButtons">
+                                <div>
+                                    <button onclick="addStars(event, 'add')">+</button>
+                                </div>
+                                <div>
+                                    <button onclick="addStars(event, 'sub')">-</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Estrelas Desejadas</h3>
+                    <div>
+                        <div class="heroEndingStars starCounter">
+                            <div class="starValue">
+                                <input type="text" id="heroEndingStars" min="0" max="10.0" value="0.0">
+                            </div>
+                            <div class="starButtons">
+                                <div>
+                                    <button onclick="addStars(event, 'add')">+</button>
+                                </div>
+                                <div>
+                                    <button onclick="addStars(event, 'sub')">-</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div>
-                <label for="heroObjectiveStars">Meta de Estrelas ( max:10 )</label>
-                <input type="number" id="heroObjectiveStars" placeholder="Meta de Estrelas">
+                <div id="heroStarsResult">teste</div>
             </div>
             <div>
                 <input type="submit" value="Calcular">
@@ -58,7 +75,25 @@
     </section>
     <script src="./js/casasDecimais.js"></script>
     <script src="./js/antitoxinCalculation.js"></script>
+    <script src="./js/shardsCalculation.js"></script>
     <script>
+        function addStars(event, operator){
+            const btn = event.currentTarget;
+            const container = btn.closest('.starCounter');
+            const input = container.querySelector('input');
+            if(!input) return;
+            let valor = parseFloat(input.value) || 0;
+            if(operator === 'add'){
+                if(valor >= 10) return;
+                valor+= 0.2;
+            }
+            if(operator === 'sub'){
+                if(valor <= 0) return;
+                valor-= 0.2;
+            }
+            valor = Math.max(0, Math.min(10, valor));
+            input.value = valor.toFixed(1);
+        }
         window.addEventListener('DOMContentLoaded',()=>{
             // Variáveis
             const calculationAntitoxinSection = document.getElementsByClassName('calculationAntitoxinSection')[0];
@@ -76,8 +111,20 @@
             });
             heroStarsCalculationForm.addEventListener('submit', (event)=>{
                 event.preventDefault();
-                const entrada = parseFloat(document.getElementById('heroStars').value);
-                const saida = parseFloat(document.getElementById('heroObjectiveStars').value);
+                // Atual
+                const entryStars = parseFloat(document.getElementById('heroStartingStars').value);
+                if(entryStars >= 10) return;
+                if(entryStars < 0) return;
+                // Desejado
+                const outStars = parseFloat(document.getElementById('heroEndingStars').value);
+                if(outStars > 10) return;
+                if(outStars <= entryStars) return;
+                // Resultado
+                console.log([entryStars, outStars]);
+                const result = document.getElementById('heroStarsResult');
+                const response = calcularShardsTotal(entryStars, outStars);
+                
+                result.innerHTML = response.html;
             });
         });
     </script>

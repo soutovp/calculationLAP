@@ -1,0 +1,74 @@
+*{
+    font-family: arial, sans-serif;
+}
+/* === ANTITOXIN === */
+.calculationAntitoxinSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin: 1em 0;
+}
+.calculationAntitoxinSection form{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 400px;
+}
+/* === STARS === */
+#heroStarsCalculation > div {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: center;
+}
+#heroStarsCalculation > div > div {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+#heroStarsCalculation > div > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+}
+#heroStarsCalculation > div > div > div input[type='number'],
+#heroStarsCalculation > div > div > div input[type='text'] {
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    color: black;
+    font-weight: 800;
+    font-size: 2em;
+}
+#heroStarsCalculation input[type="submit"]{
+    width: 100%;
+    height: 3em;
+    font-size: 1.3em;
+    background-color: rgb(199, 199, 199);
+    color: rgb(87, 87, 87);
+    border: none;
+    cursor: pointer;
+}
+.starButtons{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.starButtons button{
+    width: 100%;
+    height: 2em;
+}
+.starButtons > div{
+    width: 100%;
+    height: 2em;
+    padding: 5px;
+}
+#heroStarsResult{
+    font-size: 1em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
