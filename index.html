@@ -8,75 +8,135 @@
 </head>
 <body>
     <section class="calculationAntitoxinSection">
-        <h2>Level Upgrades ( Antitoxinas )</h2>
-        <form>
-            <div>
-                <label for="heroStartingLevel">Level Inicial do Herói</label>
-                <input type="number" name="heroStartingLevel" id="heroStartingLevel" placeholder="Nível inicial">
-            </div>
-            <div>
-                <label for="heroEndingLevel">Level Inicial do Herói</label>
-                <input type="number" name="heroEndingLevel" id="heroEndingLevel" placeholder="Nível Desejado">
-            </div>
-            <div>
-                <input type="submit" value="Enviar">
-            </div>
-            <div id="calculationAntitoxinResult"></div>
-        </form>
-        <hr>
-        <h2>Melhora de Estrelas</h2>
-        <form id="heroStarsCalculation">
-            <div>
+        <div>
+            <h2>Level Upgrades ( Antitoxinas )</h2>
+            <form>
                 <div>
-                    <h3>Estrelas Atuais</h3>
                     <div>
-                        <div class="heroStartingStars starCounter">
-                            <div class="starValue">
-                                <input type="text" id="heroStartingStars" min="0" max="10.0" value="0.0">
-                            </div>
-                            <div class="starButtons">
-                                <div>
-                                    <button onclick="addStars(event, 'add')">+</button>
+                        <h3>Estrelas Atuais</h3>
+                        <div>
+                            <div class="heroStartingStars starCounter">
+                                <div class="starValue">
+                                    <input type="text" id="heroStartingLevel" min="0" max="148" value="0">
                                 </div>
-                                <div>
-                                    <button onclick="addStars(event, 'sub')">-</button>
+                                <div class="starButtons">
+                                    <div>
+                                        <div onclick="addLevel(event, 'add')">&plus;</div>
+                                    </div>
+                                    <div>
+                                        <div onclick="addLevel(event, 'sub')">&minus;</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Estrelas Desejadas</h3>
+                        <div>
+                            <div class="heroEndingStars starCounter">
+                                <div class="starValue">
+                                    <input type="text" id="heroEndingLevel" min="0" max="148" value="0">
+                                </div>
+                                <div class="starButtons">
+                                    <div>
+                                        <div onclick="addLevel(event, 'add')">&plus;</div>
+                                    </div>
+                                    <div>
+                                        <div onclick="addLevel(event, 'sub')">&minus;</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="result-data">
+                    <div class="result-image">
+                        <img src="" alt="Antitoxin reference">
+                    </div>
+                    <div class="result-input-container" id="calculationAntitoxinResult"></div>
+                </div>
                 <div>
-                    <h3>Estrelas Desejadas</h3>
+                    <input type="submit" value="Enviar">
+                </div>
+            </form>
+        </div>
+        <div>
+            <h2>Melhora de Estrelas</h2>
+            <form id="heroStarsCalculation">
+                <div>
                     <div>
-                        <div class="heroEndingStars starCounter">
-                            <div class="starValue">
-                                <input type="text" id="heroEndingStars" min="0" max="10.0" value="0.0">
-                            </div>
-                            <div class="starButtons">
-                                <div>
-                                    <button onclick="addStars(event, 'add')">+</button>
+                        <h3>Estrelas Atuais</h3>
+                        <div>
+                            <div class="heroStartingStars starCounter">
+                                <div class="starValue">
+                                    <input type="text" id="heroStartingStars" min="0" max="10.0" value="0.0">
                                 </div>
-                                <div>
-                                    <button onclick="addStars(event, 'sub')">-</button>
+                                <div class="starButtons">
+                                    <div>
+                                        <div onclick="addStars(event, 'add')">&plus;</div>
+                                    </div>
+                                    <div>
+                                        <div onclick="addStars(event, 'sub')">&minus;</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Estrelas Desejadas</h3>
+                        <div>
+                            <div class="heroEndingStars starCounter">
+                                <div class="starValue">
+                                    <input type="text" id="heroEndingStars" min="0" max="10.0" value="0.0">
+                                </div>
+                                <div class="starButtons">
+                                    <div>
+                                        <div onclick="addStars(event, 'add')">&plus;</div>
+                                    </div>
+                                    <div>
+                                        <div onclick="addStars(event, 'sub')">&minus;</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div id="heroStarsResult">teste</div>
-            </div>
-            <div>
-                <input type="submit" value="Calcular">
-            </div>
-            <div id="heroStarsResult"></div>
-        </form>
+                <!-- CAMPO DE RESULTADO -->
+                <div class="result-data">
+                    <div class="result-image">
+                        <img src="" alt="Shards Reference">
+                    </div>
+                    <div class="result-input-container" id="heroStarsResult"></div>
+                </div>
+                <!-- SUBMIT BUTTON -->
+                <div>
+                    <input type="submit" value="Calcular">
+                </div>
+                <div id="heroStarsResult"></div>
+            </form>
+        </div>
     </section>
     <script src="./js/casasDecimais.js"></script>
     <script src="./js/antitoxinCalculation.js"></script>
     <script src="./js/shardsCalculation.js"></script>
     <script>
+        function addLevel(event, operator){
+            const btn = event.currentTarget;
+            const container = btn.closest('.starCounter');
+            const input = container.querySelector('input');
+            if(!input) return;
+            let valor = parseFloat(input.value) || 0;
+            if(operator === 'add'){
+                if(valor >= 148) return;
+                valor+= 1;
+            }
+            if(operator === 'sub'){
+                if(valor <= 0) return;
+                valor-= 1;
+            }
+            valor = Math.max(0, Math.min(148, valor));
+            input.value = valor.toFixed(0);
+        }
         function addStars(event, operator){
             const btn = event.currentTarget;
             const container = btn.closest('.starCounter');
@@ -104,10 +164,14 @@
             calculationAntitoxinForm.addEventListener('submit', (event)=>{
                 event.preventDefault();
                 const entrada = parseInt(document.getElementById('heroStartingLevel').value);
+                if(entrada <= 0) return;
+                if(entrada >= 150) return;
                 const saida = parseInt(document.getElementById('heroEndingLevel').value);
+                if(saida <= entrada) return;
+                if(saida > 150) return;
                 const result = calcularAntitoxinTotal(entrada, saida);
                 console.log(abreviarNumero(result.totalFormatado, 3));
-                document.getElementById('calculationAntitoxinResult').innerText = `${result.totalFormatado} de Antitoxinas`;
+                document.getElementById('calculationAntitoxinResult').innerText = result.totalFormatado;
             });
             heroStarsCalculationForm.addEventListener('submit', (event)=>{
                 event.preventDefault();
@@ -124,7 +188,7 @@
                 const result = document.getElementById('heroStarsResult');
                 const response = calcularShardsTotal(entryStars, outStars);
                 
-                result.innerHTML = response.html;
+                result.innerHTML = response.totalShards;
             });
         });
     </script>
