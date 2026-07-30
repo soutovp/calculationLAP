@@ -15,7 +15,7 @@
                     <div>
                         <h3>Estrelas Atuais</h3>
                         <div>
-                            <div class="heroStartingStars starCounter">
+                            <div class="heroStartingStars levelCounter">
                                 <div class="starValue">
                                     <input type="text" id="heroStartingLevel" min="0" max="148" value="0">
                                 </div>
@@ -33,7 +33,7 @@
                     <div>
                         <h3>Estrelas Desejadas</h3>
                         <div>
-                            <div class="heroEndingStars starCounter">
+                            <div class="heroEndingStars levelCounter">
                                 <div class="starValue">
                                     <input type="text" id="heroEndingLevel" min="0" max="148" value="0">
                                 </div>
@@ -50,9 +50,6 @@
                     </div>
                 </div>
                 <div class="result-data">
-                    <div class="result-image">
-                        <img src="" alt="Antitoxin reference">
-                    </div>
                     <div class="result-input-container" id="calculationAntitoxinResult"></div>
                 </div>
                 <div>
@@ -103,26 +100,74 @@
                 </div>
                 <!-- CAMPO DE RESULTADO -->
                 <div class="result-data">
-                    <div class="result-image">
-                        <img src="" alt="Shards Reference">
-                    </div>
                     <div class="result-input-container" id="heroStarsResult"></div>
                 </div>
                 <!-- SUBMIT BUTTON -->
                 <div>
                     <input type="submit" value="Calcular">
                 </div>
-                <div id="heroStarsResult"></div>
+            </form>
+        </div>
+        <div>
+            <h2>Insigneas de Habilidade</h2>
+            <form id="insigneaHabilidades">
+                <div>
+                    <div class="heroHability">
+                        <h3>Nível Atual da Habilidade</h3>
+                        <div>
+                            <div class="habilityCounter">
+                                <div>
+                                    <input type="text" id="heroHabilityStart" min="0" max="22" value="0">
+                                </div>
+                            </div>
+                            <div class="starButtons">
+                                <div>
+                                    <div onclick="addHabilityLevel(event, 'add')">&plus;</div>
+                                </div>
+                                <div>
+                                    <div onclick="addHabilityLevel(event, 'sub')">&minus;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="heroHability">
+                        <h3>Meta Desejada</h3>
+                        <div>
+                            <div class="habilityCounter">
+                                <div>
+                                    <input type="text" min="0" max="22" id="heroHabilityEnd" value="0">
+                                </div>
+                            </div>
+                            <div class="starButtons">
+                                <div>
+                                    <div onclick="addHabilityLevel(event, 'add')">&plus;</div>
+                                </div>
+                                <div>
+                                    <div onclick="addHabilityLevel(event, 'sub')">&minus;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- CAMPO DE RESULTADO -->
+                <div class="result-data">
+                    <div class="result-input-container" id="heroHabilityResult"></div>
+                </div>
+                <!-- SUBMIT BUTTON -->
+                <div>
+                    <input type="submit" value="Calcular">
+                </div>
             </form>
         </div>
     </section>
     <script src="./js/casasDecimais.js"></script>
     <script src="./js/antitoxinCalculation.js"></script>
     <script src="./js/shardsCalculation.js"></script>
+    <script src="./js/habilityCalculation.js"></script>
     <script>
         function addLevel(event, operator){
             const btn = event.currentTarget;
-            const container = btn.closest('.starCounter');
+            const container = btn.closest('.levelCounter');
             const input = container.querySelector('input');
             if(!input) return;
             let valor = parseFloat(input.value) || 0;
@@ -154,12 +199,32 @@
             valor = Math.max(0, Math.min(10, valor));
             input.value = valor.toFixed(1);
         }
+        function addHabilityLevel(event, operator){
+            const btn = event.currentTarget;
+            console.log(btn.closest('.habilityCounter'));
+            const container = btn.closest('.habilityCounter');
+            const input = container.querySelector('input');
+            if(!input) return;
+            let valor = parseFloat(input.value) || 0;
+            if(operator === 'add'){
+                if(valor >= 22) return;
+                valor+= 1;
+            }
+            if(operator === 'sub'){
+                if(valor <= 0) return;
+                valor-= 1;
+            }
+            valor = Math.max(0, Math.min(22, valor));
+            input.value = valor.toFixed(0);
+        }
         window.addEventListener('DOMContentLoaded',()=>{
             // Variáveis
             const calculationAntitoxinSection = document.getElementsByClassName('calculationAntitoxinSection')[0];
             const calculationAntitoxinForm = calculationAntitoxinSection.getElementsByTagName('form')[0];
             // --
             const heroStarsCalculationForm = document.getElementById('heroStarsCalculation');
+            // --
+            const heroHabilityCalculationForm = document.getElementById('insigneaHabilidades');
             // Eventos
             calculationAntitoxinForm.addEventListener('submit', (event)=>{
                 event.preventDefault();
@@ -171,7 +236,19 @@
                 if(saida > 150) return;
                 const result = calcularAntitoxinTotal(entrada, saida);
                 console.log(abreviarNumero(result.totalFormatado, 3));
-                document.getElementById('calculationAntitoxinResult').innerText = result.totalFormatado;
+
+                const resultContainer = document.getElementById('calculationAntitoxinResult');
+                resultContainer.innerHTML = '';
+                const img = document.createElement('img');
+                const span = document.createElement('span');
+                img.src = './img/antitoxin-no-bg-2.png';
+                img.alt = 'Antitoxin Bottle';
+                img.style.transform = 'rotate(-35deg)';
+                img.style.width = "50px";
+
+                span.innerText = abreviarNumero(result.totalAntitoxins,1);
+                resultContainer.appendChild(img);
+                resultContainer.appendChild(span);
             });
             heroStarsCalculationForm.addEventListener('submit', (event)=>{
                 event.preventDefault();
@@ -184,11 +261,39 @@
                 if(outStars > 10) return;
                 if(outStars <= entryStars) return;
                 // Resultado
-                console.log([entryStars, outStars]);
-                const result = document.getElementById('heroStarsResult');
-                const response = calcularShardsTotal(entryStars, outStars);
+                const resultContainer = document.getElementById('heroStarsResult');
+                const img = document.createElement('img');
+                const span = document.createElement('span');
                 
-                result.innerHTML = response.totalShards;
+                img.src = './img/recruit_shard.png';
+                img.alt = 'Fragment Shards';
+                img.style.width = '50px';
+                span.innerText = calcularShardsTotal(entryStars, outStars).totalShards;
+                resultContainer.innerHTML = '';
+                resultContainer.appendChild(img);
+                resultContainer.appendChild(span);
+            });
+            heroHabilityCalculationForm.addEventListener('submit', (event)=>{
+                event.preventDefault();
+                //Inputs
+                const habilityStart = parseInt(document.getElementById('heroHabilityStart').value);
+                const habilityEnd = parseInt(document.getElementById('heroHabilityEnd').value);
+                //Checks
+                if(habilityStart > 22 || habilityEnd > 22) return;
+                if(habilityStart <= 0 || habilityEnd <= 0) return;
+                //Resultados
+                const resultContainer = document.getElementById('heroHabilityResult');
+                const result = calcularSkillBadgesTotal(habilityStart, habilityEnd);
+                const img = document.createElement('img');
+                const span = document.createElement('span');
+                //Actions
+                resultContainer.innerHTML = '';
+                img.src = './img/sign_medal.png';
+                img.alt = 'Insigneas de Habilidade';
+                img.style.width = '50px';
+                span.innerText = result.totalFormatado;
+                resultContainer.appendChild(img);
+                resultContainer.appendChild(span);
             });
         });
     </script>

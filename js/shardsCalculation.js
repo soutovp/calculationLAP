@@ -103,31 +103,3 @@ function calcularShardsTotal(estrelaAtual, estrelaDesejada) {
 		html: `<p>Para alcançar o total de <span style="color: red;">${(desejadaInt / 10).toFixed(1)} estrelas</span>, deverá gastar <span style="color: red;">${totalShards} fragmentos</span>.</p>`,
 	};
 }
-
-// ==========================================
-// TESTES / EXEMPLOS DE USO
-// ==========================================
-
-// Exemplo do seu caso: De 5.2 para 6.8 estrelas
-console.log(calcularShardsTotal(5.2, 6.8));
-/*
-Saída:
-{
-  estrelaAtual: '5.2',
-  estrelaDesejada: '6.8',
-  totalShards: 148,
-  totalFormatado: '148'
-}
-*/
-
-// Exemplo do início ao fim: De 0 para 10 estrelas
-console.log(calcularShardsTotal(0, 10));
-/*
-Saída:
-{
-  estrelaAtual: '0.0',
-  estrelaDesejada: '10.0',
-  totalShards: 985,
-  totalFormatado: '985'
-}
-*/

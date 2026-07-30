@@ -5,7 +5,7 @@
  * @param {number} casasDecimais - Quantidade máxima de casas decimais (padrão: 1)
  * @returns {string} O número formatado com o sufixo apropriado
  */
-function abreviarNumero(numero, casasDecimais = 1) {
+function abreviarNumero(numero, casasDecimais = 2) {
 	// Tratamento para entradas inválidas ou nulas
 	if (typeof numero !== 'number' || isNaN(numero)) return '0';
 

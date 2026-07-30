@@ -193,28 +193,3 @@ function calcularAntitoxinTotal(nivelAtual, nivelDesejado) {
 	};
 }
 
-// ==========================================
-// EXEMPLOS DE USO
-// ==========================================
-
-// Exemplo 1: Do Nível 1 ao Nível 20
-// console.log(calcularAntitoxinTotal(1, 20));
-/*
-{
-  nivelAtual: 1,
-  nivelDesejado: 20,
-  totalAntitoxins: 50200,
-  totalFormatado: '50.200'
-}
-*/
-
-// Exemplo 2: Do Nível 50 ao Nível 100
-// console.log(calcularAntitoxinTotal(50, 100));
-/*
-{
-  nivelAtual: 50,
-  nivelDesejado: 100,
-  totalAntitoxins: 578000000,
-  totalFormatado: '578.000.000'
-}
-*/
